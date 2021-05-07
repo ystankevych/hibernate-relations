@@ -25,13 +25,13 @@ public class MovieDaoImplTest extends AbstractTest {
     @Test
     public void create_Ok() {
         MovieDao movieDao = new MovieDaoImpl(getSessionFactory());
-        insertMovies(movieDao, shawshankRedemption);
+        verifyCreateMovieWorks(movieDao, shawshankRedemption.clone(), 1L);
     }
 
     @Test
     public void getById_Ok() {
         MovieDao movieDao = new MovieDaoImpl(getSessionFactory());
-        insertMovies(movieDao, shawshankRedemption);
+        verifyCreateMovieWorks(movieDao, shawshankRedemption.clone(), 1L);
         Optional<Movie> actualOptional = movieDao.get(1L);
         Assert.assertTrue(actualOptional.isPresent());
         Movie actual = actualOptional.get();
@@ -44,12 +44,12 @@ public class MovieDaoImplTest extends AbstractTest {
     public void saveWithActor_ok() {
         Actor morganFreemanClone = morganFreeman.clone();
         ActorDao actorDao = new ActorDaoImpl(getSessionFactory());
-        insertActors(actorDao, morganFreemanClone);
+        ActorDaoImplTest.verifyCreateActorWorks(actorDao, morganFreemanClone, 1L);
 
         MovieDao movieDao = new MovieDaoImpl(getSessionFactory());
         Movie shawshankRedemptionWithActor = shawshankRedemption.clone();
         shawshankRedemptionWithActor.setActors(List.of(morganFreemanClone));
-        insertMovies(movieDao, shawshankRedemptionWithActor);
+        verifyCreateMovieWorks(movieDao, shawshankRedemptionWithActor, 1L);
 
         Optional<Movie> actualOptional = movieDao.get(1L);
         Assert.assertTrue(actualOptional.isPresent());
@@ -76,7 +76,7 @@ public class MovieDaoImplTest extends AbstractTest {
         MovieDao movieDao = new MovieDaoImpl(getSessionFactory());
         Movie shawshankRedemptionWithActor = shawshankRedemption.clone();
         shawshankRedemptionWithActor.setActors(List.of(morganFreemanClone));
-        insertMovies(movieDao, shawshankRedemptionWithActor);
+        verifyCreateMovieWorks(movieDao, shawshankRedemptionWithActor, 1L);
 
         Optional<Movie> actualOptional = movieDao.get(1L);
         Assert.assertTrue(actualOptional.isPresent());
@@ -97,14 +97,6 @@ public class MovieDaoImplTest extends AbstractTest {
         MovieDao movieDao = new MovieDaoImpl(getSessionFactory());
         Optional<Movie> actual = movieDao.get(100L);
         Assert.assertFalse(actual.isPresent());
-    }
-
-    private void insertMovies(MovieDao movieDao, Movie movie) {
-        verifyCreateMovieWorks(movieDao, movie, 1L);
-    }
-
-    private void insertActors(ActorDao actorDao, Actor actor) {
-        ActorDaoImplTest.verifyCreateActorWorks(actorDao, actor, 1L);
     }
 
     private void verifyCreateMovieWorks(MovieDao movieDao, Movie movie, Long expectedId) {
