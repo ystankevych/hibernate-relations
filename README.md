@@ -11,7 +11,7 @@ public class ActorDaoImpl extends AbstractDao implements ActorDao {
 }
 ```
 Such structure is a good example of Dependency Injection implementation. Please, do not modify this.
-And thus in methods `add(Entity entity)` and `get(Long id)` of DAO layer you need just refer to the SessionFactory
+And thus in methods `add(Entity entity)` and `get(Long id)` of DAO layer you need just to refer to the SessionFactory
 instance of the parent AbstractDao class:
 
 ```java
