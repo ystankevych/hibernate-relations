@@ -17,23 +17,28 @@ import mate.academy.hibernate.relations.util.HibernateUtil;
 import org.hibernate.SessionFactory;
 
 public class Main {
-    public static void main(String[] args) {
-        // use this session factory when you will initialize service instances
-        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+    private static final SessionFactory factory = HibernateUtil.getSessionFactory();
 
+    public static void main(String[] args) {
+        // Services declaration and initialization
+        final CountryService countryService = new CountryServiceImpl(new CountryDaoImpl(factory));
+        final ActorService actorService = new ActorServiceImpl(new ActorDaoImpl(factory));
+        final MovieService movieService = new MovieServiceImpl(new MovieDaoImpl(factory));
+
+        // save country
         Country usa = new Country("USA");
-        CountryService countryService = new CountryServiceImpl(new CountryDaoImpl(sessionFactory));
         countryService.add(usa);
 
+        // saving actor
         Actor vinDiesel = new Actor("Vin Diesel");
         vinDiesel.setCountry(usa);
-        ActorService actorService = new ActorServiceImpl(new ActorDaoImpl(sessionFactory));
         actorService.add(vinDiesel);
 
+        // saving new movie
         Movie fastAndFurious = new Movie("Fast and Furious");
         fastAndFurious.setActors(List.of(vinDiesel));
-        MovieService movieService = new MovieServiceImpl(new MovieDaoImpl(sessionFactory));
         movieService.add(fastAndFurious);
-        System.out.println(movieService.get(fastAndFurious.getId()));
+
+        System.out.println();
     }
 }

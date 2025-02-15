@@ -1,5 +1,6 @@
 package mate.academy.hibernate.relations.model;
 
+import jakarta.persistence.Basic;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -17,7 +18,10 @@ public class Movie implements Cloneable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Basic(optional = false)
     private String title;
+
     @ManyToMany
     @JoinTable(name = "movies_actors",
             joinColumns = @JoinColumn(name = "movie_id"),
