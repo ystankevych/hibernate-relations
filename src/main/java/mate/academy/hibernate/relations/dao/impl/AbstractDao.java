@@ -24,9 +24,11 @@ public abstract class AbstractDao {
 
     protected <T> Optional<T> get(Class<T> entityClass, Long id) {
         try {
-            return Optional.ofNullable(factory.fromSession(session -> session.get(entityClass, id)));
+            return Optional.ofNullable(factory.fromSession(session ->
+                    session.get(entityClass, id)));
         } catch (Exception e) {
-            throw new DataProcessingException("Failed to find entity with id '%s'".formatted(id), e);
+            throw new DataProcessingException("Failed to find entity with id '%s'"
+                    .formatted(id), e);
         }
     }
 }
