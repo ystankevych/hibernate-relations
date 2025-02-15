@@ -12,11 +12,11 @@ public class MovieDaoImpl extends AbstractDao implements MovieDao {
 
     @Override
     public Movie add(Movie movie) {
-        return null;
+        return super.add(movie);
     }
 
     @Override
     public Optional<Movie> get(Long id) {
-        return null;
+        return super.get(Movie.class, id);
     }
 }
